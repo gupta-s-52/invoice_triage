@@ -178,7 +178,7 @@ Try prompts like:
 ---
 
 ## 🔐 Access / Onboarding (internal)
-If you don’t have GitHub Copilot access yet, follow the internal **<File>codePG--Github-Copilot.aspx</File>** guidance for onboarding and office hours. citeturn8search102
+If you don’t have GitHub Copilot access yet, follow the internal [**<File>codePG--Github-Copilot.aspx</File>**](https://pgone.sharepoint.com/sites/GBSaccelerators/SitePages/codePG--Github-Copilot.aspx?web=1) guidance for onboarding and office hours. citeturn8search102
 
 ---
 
