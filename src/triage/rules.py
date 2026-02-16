@@ -32,26 +32,56 @@ Rule = Callable[[Invoice], Optional[TriageResult]]
 # TODO: Implement each rule below and add them to RULES in the correct order.
 
 def rule_missing_po(inv: Invoice) -> Optional[TriageResult]:
-    raise NotImplementedError
+    if inv.po_number == "" or inv.po_number == "NULL":
+        return TriageResult(
+            bucket="MISSING_PO",
+            owner_queue="AP-Helpdesk",
+            reason="PO missing"
+        )
+    return None
 
 def rule_no_grn(inv: Invoice) -> Optional[TriageResult]:
-    raise NotImplementedError
+    if inv.po_number != "" and inv.po_number != "NULL" and inv.grn_received == "N":
+        return TriageResult(
+            bucket="NO_GRN",
+            owner_queue="Receiving",
+            reason="Goods receipt not posted"
+        )
+    return None
 
 def rule_tax_data_issue(inv: Invoice) -> Optional[TriageResult]:
-    raise NotImplementedError
+    if inv.tax_id == "" or not TAX_ID_RE.match(inv.tax_id):
+        return TriageResult(
+            bucket="TAX_DATA_ISSUE",
+            owner_queue="Vendor-MDM",
+            reason="Tax ID missing/invalid"
+        )
+    return None
 
 def rule_amount_outlier(inv: Invoice) -> Optional[TriageResult]:
-    raise NotImplementedError
+    if inv.amount > 10000:
+        return TriageResult(
+            bucket="AMOUNT_OUTLIER",
+            owner_queue="AP-Triage",
+            reason="High value invoice requires review"
+        )
+    return None
 
 def rule_terms_mismatch(inv: Invoice) -> Optional[TriageResult]:
-    raise NotImplementedError
+    if inv.payment_terms not in ALLOWED_TERMS:
+        return TriageResult(
+            bucket="TERMS_MISMATCH",
+            owner_queue="AP-VendorMgmt",
+            reason="Payment terms not standard"
+        )
+    return None
 
 RULES: list[Rule] = [
-    # rule_missing_po,
-    # rule_no_grn,
-    # rule_tax_data_issue,
-    # rule_amount_outlier,
-    # rule_terms_mismatch,
+    rule_missing_po,
+    rule_no_grn,
+    rule_tax_data_issue,
+    rule_amount_outlier,
+    rule_terms_mismatch,
 ]
 
 def triage(inv: Invoice) -> TriageResult:

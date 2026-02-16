@@ -21,13 +21,11 @@ def inv(**overrides):
     return Invoice(**base)
 
 
-@pytest.mark.xfail(reason="TODO: implement RULES and rule functions")
 def test_missing_po():
     res = triage(inv(po_number=""))
     assert res.bucket == "MISSING_PO"
 
 
-@pytest.mark.xfail(reason="TODO: implement RULES and rule functions")
 def test_rule_order_tax_beats_outlier():
     res = triage(inv(amount=999999.0, tax_id=""))
     assert res.bucket == "TAX_DATA_ISSUE"
