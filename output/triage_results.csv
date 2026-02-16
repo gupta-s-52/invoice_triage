@@ -1,5 +1,5 @@
 invoice_id,triage_bucket,owner_queue,reason
-INV-1001,CLEAN,AP-AutoPay,Pass
+INV-1001,NO_GRN,Receiving,Goods receipt not posted
 INV-1002,MISSING_PO,AP-Helpdesk,PO missing
 INV-1003,NO_GRN,Receiving,Goods receipt not posted
 INV-1004,TAX_DATA_ISSUE,Vendor-MDM,Tax ID missing/invalid
